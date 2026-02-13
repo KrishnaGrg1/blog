@@ -135,20 +135,35 @@ export default async function Blog({
         <div className="pb-20">
           <div
             className="prose prose-lg max-w-none
-              dark:prose-invert
-              prose-headings:font-bold prose-headings:tracking-tight
-              prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
-              prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-8
-              prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-6
-              prose-p:leading-relaxed
-              prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-              prose-strong:font-semibold
-              prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-              prose-pre:bg-secondary prose-pre:shadow-lg
-              prose-img:rounded-lg prose-img:shadow-md
-              prose-blockquote:border-l-4 prose-blockquote:border-blue-500 dark:prose-blockquote:border-blue-400 prose-blockquote:italic
-              prose-ul:list-disc prose-ol:list-decimal
-            "
+  dark:prose-invert
+  prose-headings:font-bold prose-headings:tracking-tight
+  prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
+  prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-8
+  prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-6
+  prose-p:leading-relaxed
+  prose-a:text-blue-600
+  dark:prose-a:text-blue-400
+  prose-a:font-medium
+  prose-a:transition-colors
+  prose-a:duration-200
+  hover:prose-a:text-blue-500
+  dark:hover:prose-a:text-blue-300
+  prose-a:no-underline
+  hover:prose-a:underline
+  prose-strong:font-semibold
+  prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+  prose-pre:bg-secondary prose-pre:shadow-lg
+  prose-img:rounded-lg prose-img:shadow-md
+  prose-blockquote:border-l-4 prose-blockquote:border-blue-500 dark:prose-blockquote:border-blue-400 prose-blockquote:italic
+  prose-ul:list-disc prose-ol:list-decimal
+  [&_a]:text-blue-600 
+  dark:[&_a]:text-blue-400
+  [&_a]:font-medium
+  [&_a]:no-underline
+  hover:[&_a]:underline
+  hover:[&_a]:text-blue-500
+  dark:hover:[&_a]:text-blue-300
+"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
         </div>

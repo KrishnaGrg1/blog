@@ -158,7 +158,7 @@ export default function SignUpPage() {
                 />
               </FieldGroup>
               {form.formState.errors.root?.message ? (
-                <p className="text-red-700">
+                <p className="text-destructive text-sm text-center">
                   {form.formState.errors.root.message}
                 </p>
               ) : (

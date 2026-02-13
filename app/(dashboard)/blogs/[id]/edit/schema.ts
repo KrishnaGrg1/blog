@@ -12,8 +12,8 @@ const baseBlogFields = {
 
   slug: z
     .string()
-    .min(3)
-    .max(160)
+    .min(3,'Slug must be at least 3 characters')
+    .max(160,"Slug too long")
     .regex(
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
       "Slug must be lowercase and hyphen-separated"

@@ -51,7 +51,12 @@ export default function SignUpPage() {
           router.push("/blogs");
           router.refresh();
         } else {
-          toast.error(result.error?.message || "Failed to create account");
+          toast.error(
+            result.message || result.message || "Failed to create account",
+          );
+          form.setError("root", {
+            message: result.message || result.message,
+          });
         }
       } catch (error: any) {
         toast.error(error?.message || "Failed to create account");
@@ -152,6 +157,13 @@ export default function SignUpPage() {
                   )}
                 />
               </FieldGroup>
+              {form.formState.errors.root?.message ? (
+                <p className="text-red-700">
+                  {form.formState.errors.root.message}
+                </p>
+              ) : (
+                []
+              )}
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">

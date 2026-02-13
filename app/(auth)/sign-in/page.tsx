@@ -50,7 +50,10 @@ export default function SignInPage() {
           router.push("/blogs");
           router.refresh();
         } else {
-          toast.error(result.error?.message || "Invalid credentials");
+          toast.error(result.message || "Invalid credentials");
+          form.setError("root", {
+            message: result?.message || result.message,
+          });
         }
       } catch (error: any) {
         toast.error(error?.message || "Invalid credentials");
@@ -104,14 +107,18 @@ export default function SignInPage() {
                     </Field>
                   )}
                 />
-
                 {/* Password Field */}
                 <Controller
                   name="password"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel>Password</FieldLabel>
+                      <div className="flex items-center justify-between">
+                        <FieldLabel>Password</FieldLabel>
+                        {/* <Link href="/forgot-password" className="text-sm">
+                          Forgot password?
+                        </Link> */}
+                      </div>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
@@ -128,16 +135,15 @@ export default function SignInPage() {
                   )}
                 />
               </FieldGroup>
-
               {/* Forgot Password Link */}
-              <div className="flex items-center justify-end">
-                <Link href="/forgot-password" className="text-sm">
-                  Forgot password?
-                </Link>
-              </div>
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
+            {form.formState.errors.root?.message && (
+              <p className="text-destructive text-sm text-center">
+                {form.formState.errors.root.message}
+              </p>
+            )}
             <Button
               type="submit"
               form="sign-in-form"

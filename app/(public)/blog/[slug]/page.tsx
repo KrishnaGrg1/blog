@@ -95,7 +95,7 @@ export default async function Blog({
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-linear-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent leading-tight">
             {blog.title}
           </h1>
 
@@ -121,13 +121,13 @@ export default async function Blog({
 
         {/* Featured Image */}
         {blog.photo && (
-          <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-12 group">
+          <div className="relative w-full aspect-21/9 rounded-2xl overflow-hidden shadow-2xl mb-12 group">
             <img
               src={blog.photo}
               alt={blog.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         )}
 

@@ -15,7 +15,7 @@ export default async function PublicLayout({
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center transition-transform group-hover:scale-105">
+              <div className="h-9 w-9 rounded-lg bg-linear-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center transition-transform group-hover:scale-105">
                 <FileText className="h-5 w-5 text-white dark:text-slate-900" />
               </div>
               <span className="text-xl font-bold">BlogHub</span>

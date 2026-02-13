@@ -64,7 +64,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center">
+              <div className="h-9 w-9 rounded-lg bg-linear-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center">
                 <FileText className="h-5 w-5 text-white dark:text-slate-900" />
               </div>
               <span className="text-xl font-bold">BlogHub</span>
@@ -98,7 +98,7 @@ export default function HomePage() {
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight">
-                <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                   Share Your Stories
                 </span>
                 <br />
@@ -145,7 +145,7 @@ export default function HomePage() {
 
         {/* Background Decoration */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-primary/10 to-transparent opacity-50 blur-3xl" />
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-200 h-200 rounded-full bg-linear-to-br from-primary/10 to-transparent opacity-50 blur-3xl" />
         </div>
       </section>
 
@@ -199,7 +199,7 @@ export default function HomePage() {
             {steps.map((step, index) => (
               <div key={index} className="relative">
                 <div className="space-y-4">
-                  <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 text-white dark:text-slate-900 font-bold text-xl shadow-lg">
+                  <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 text-white dark:text-slate-900 font-bold text-xl shadow-lg">
                     {step.number}
                   </div>
                   <h3 className="text-xl font-bold">{step.title}</h3>
@@ -208,7 +208,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-border to-transparent -translate-x-1/2" />
+                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-linear-to-r from-border to-transparent -translate-x-1/2" />
                 )}
               </div>
             ))}
@@ -238,7 +238,7 @@ export default function HomePage() {
                   "Community of writers",
                 ].map((benefit, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
                     </div>
                     <span className="text-muted-foreground">{benefit}</span>
@@ -251,7 +251,7 @@ export default function HomePage() {
               <Card className="shadow-2xl">
                 <CardContent className="p-8 space-y-4">
                   <div className="flex items-center gap-3 pb-4 border-b">
-                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300" />
+                    <div className="h-10 w-10 rounded-full bg-linear-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300" />
                     <div>
                       <div className="font-semibold">John Doe</div>
                       <div className="text-sm text-muted-foreground">
@@ -270,7 +270,7 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl -z-10" />
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-linear-to-br from-primary/20 to-transparent rounded-full blur-2xl -z-10" />
             </div>
           </div>
         </div>
@@ -307,7 +307,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardContent>
-            <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+            <div className="absolute inset-0 bg-grid-white/[0.05] bg-size-[20px_20px]" />
           </Card>
         </div>
       </section>
@@ -318,7 +318,7 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-lg bg-linear-to-br from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 flex items-center justify-center">
                   <FileText className="h-4 w-4 text-white dark:text-slate-900" />
                 </div>
                 <span className="font-bold">BlogHub</span>

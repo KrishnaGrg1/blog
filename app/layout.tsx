@@ -18,6 +18,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blog",
   description: "Blog generated",
+  icons: [
+    {
+      url: "/companylogo.jpeg",
+      type: "image/jpeg",
+      sizes: "192x192",
+    },
+  ],
 };
 
 export default function RootLayout({

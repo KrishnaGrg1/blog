@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -39,17 +39,19 @@ export default async function PublicPage() {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Hero Header */}
-      <header className="border-b ">
+      <header className="border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="max-w-3xl">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-              <span>Stories worth</span>
+              <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Stories worth
+              </span>
               <br />
-              <span className="text-slate-900">reading.</span>
+              <span>reading.</span>
             </h1>
-            <p className="text-xl text-slate-600 leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed">
               Insights, ideas, and inspiration from our community of writers.
             </p>
           </div>
@@ -61,28 +63,31 @@ export default async function PublicPage() {
         {featuredBlog && (
           <section className="mb-20">
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-xs font-semibold tracking-widest uppercase text-slate-900">
+              <div className="h-px flex-1 bg-gradient-to-r from-foreground to-transparent" />
+              <span className="text-xs font-semibold tracking-widest uppercase">
                 Featured Story
               </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-foreground to-transparent" />
             </div>
 
             <Link href={`/blog/${featuredBlog.slug}`} className="group">
               <article className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Featured Image */}
                 {featuredBlog.photo && (
-                  <div className="relative  overflow-hidden rounded-2xl ">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
                     <img
                       src={featuredBlog.photo}
                       alt={featuredBlog.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 )}
 
                 {/* Featured Content */}
                 <div className="space-y-6">
                   {/* Meta */}
-                  <div className="flex items-center gap-4 text-sm text-slate-600">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
                       {formatDate(featuredBlog.createdAt)}
@@ -95,13 +100,13 @@ export default async function PublicPage() {
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 group-hover:text-slate-700 transition-colors">
+                  <h2 className="text-4xl sm:text-5xl font-bold tracking-tight group-hover:text-muted-foreground transition-colors">
                     {featuredBlog.title}
                   </h2>
 
                   {/* Description */}
                   {featuredBlog.description && (
-                    <p className="text-lg text-slate-600 leading-relaxed line-clamp-3">
+                    <p className="text-lg text-muted-foreground leading-relaxed line-clamp-3">
                       {featuredBlog.description}
                     </p>
                   )}
@@ -116,7 +121,7 @@ export default async function PublicPage() {
                           <Badge
                             key={i}
                             variant="outline"
-                            className="rounded-full border-slate-300 text-slate-700 hover:bg-slate-100"
+                            className="rounded-full"
                           >
                             {keyword.trim()}
                           </Badge>
@@ -125,7 +130,7 @@ export default async function PublicPage() {
                   )}
 
                   {/* Read More */}
-                  <div className="flex items-center gap-2 text-slate-900 font-medium group-hover:gap-4 transition-all">
+                  <div className="flex items-center gap-2 font-medium group-hover:gap-4 transition-all">
                     Read full story
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </div>
@@ -138,7 +143,7 @@ export default async function PublicPage() {
         {/* All Articles Grid */}
         {otherBlogs.length > 0 && (
           <section>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-8">
+            <h2 className="text-2xl font-bold tracking-tight mb-8">
               Latest Articles
             </h2>
 
@@ -146,13 +151,13 @@ export default async function PublicPage() {
               {otherBlogs.map((blog) => (
                 <Link
                   key={blog.id}
-                  href={`/blogs/${blog.slug}`}
+                  href={`/blog/${blog.slug}`}
                   className="group"
                 >
-                  <Card className="h-full border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl overflow-hidden">
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 overflow-hidden">
                     {/* Image */}
                     {blog.photo && (
-                      <div className="relative  overflow-hidden bg-slate-200">
+                      <div className="relative aspect-[16/9] overflow-hidden bg-secondary">
                         <img
                           src={blog.photo}
                           alt={blog.title}
@@ -163,27 +168,27 @@ export default async function PublicPage() {
 
                     <CardContent className="p-6 space-y-4">
                       {/* Meta */}
-                      <div className="flex items-center gap-3 text-xs text-slate-500">
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
                         <time>{formatDate(blog.createdAt)}</time>
                         <span>•</span>
                         <span>{calculateReadTime(blog.content)} min read</span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-slate-900 line-clamp-2 group-hover:text-slate-700 transition-colors leading-tight">
+                      <h3 className="text-xl font-bold line-clamp-2 group-hover:text-muted-foreground transition-colors leading-tight">
                         {blog.title}
                       </h3>
 
                       {/* Description */}
                       {blog.description && (
-                        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                           {blog.description}
                         </p>
                       )}
 
                       {/* Author */}
                       {blog.user && (
-                        <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                        <div className="flex items-center gap-2 pt-2 border-t">
                           {blog.user.image && (
                             <img
                               src={blog.user.image}
@@ -191,7 +196,7 @@ export default async function PublicPage() {
                               className="h-8 w-8 rounded-full object-cover"
                             />
                           )}
-                          <span className="text-sm font-medium text-slate-700">
+                          <span className="text-sm font-medium">
                             {blog.user.name}
                           </span>
                         </div>
@@ -208,25 +213,11 @@ export default async function PublicPage() {
         {blogs.length === 0 && (
           <div className="text-center py-20">
             <div className="max-w-md mx-auto space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-full bg-slate-100 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-slate-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                  />
-                </svg>
+              <div className="w-16 h-16 mx-auto rounded-full bg-secondary flex items-center justify-center">
+                <FileText className="w-8 h-8 text-muted-foreground" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900">
-                No stories yet
-              </h3>
-              <p className="text-slate-600">
+              <h3 className="text-2xl font-bold">No stories yet</h3>
+              <p className="text-muted-foreground">
                 Check back soon for new content from our writers.
               </p>
             </div>

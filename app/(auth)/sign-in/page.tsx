@@ -59,19 +59,16 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl ">
-            <FileText className="h-8 w-8 text-white" />
-          </div>
           <h1 className="text-3xl font-bold tracking-tight ">Welcome Back</h1>
-          <p className="text-slate-600 mt-2">Sign in to continue to BlogHub</p>
+          <p className="mt-2">Sign in to continue to BlogHub</p>
         </div>
 
         {/* Sign In Card */}
-        <Card className="border-slate-200 shadow-xl">
+        <Card className=" shadow-xl">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
             <CardDescription>
@@ -93,7 +90,7 @@ export default function SignInPage() {
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel>Email Address</FieldLabel>
                       <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <Mail className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
                           {...field}
                           type="email"
@@ -116,7 +113,7 @@ export default function SignInPage() {
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel>Password</FieldLabel>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <Lock className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
                           {...field}
                           type="password"
@@ -134,10 +131,7 @@ export default function SignInPage() {
 
               {/* Forgot Password Link */}
               <div className="flex items-center justify-end">
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
-                >
+                <Link href="/forgot-password" className="text-sm">
                   Forgot password?
                 </Link>
               </div>
@@ -155,12 +149,9 @@ export default function SignInPage() {
             </Button>
 
             {/* Sign Up Link */}
-            <p className="text-center text-sm text-slate-600">
+            <p className="text-center text-sm ">
               Don't have an account?{" "}
-              <Link
-                href="/sign-up"
-                className="font-medium text-slate-900 hover:underline"
-              >
+              <Link href="/sign-up" className="font-medium  hover:underline">
                 Sign up
               </Link>
             </p>
@@ -168,13 +159,13 @@ export default function SignInPage() {
         </Card>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-500">
+        <p className="text-center text-xs ">
           By signing in, you agree to our{" "}
-          <Link href="/terms" className="underline hover:text-slate-700">
+          <Link href="/terms" className="underline ">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="underline hover:text-slate-700">
+          <Link href="/privacy" className="underline ">
             Privacy Policy
           </Link>
         </p>

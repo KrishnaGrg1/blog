@@ -60,19 +60,12 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex items-center justify-center ">
       <div className="w-full max-w-md space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl">
-            <FileText className="h-8 w-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight  text-transparent">
-            Create Account
-          </h1>
-          <p className="text-slate-600 mt-2">
-            Start your blogging journey with BlogHub
-          </p>
+          <h1 className="text-3xl font-bold ">Create Account</h1>
+          <p className="mt-2">Start your blogging journey with BlogHub</p>
         </div>
 
         {/* Sign Up Card */}
@@ -98,7 +91,7 @@ export default function SignUpPage() {
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel>Full Name</FieldLabel>
                       <div className="relative">
-                        <User className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <User className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
                           {...field}
                           type="text"
@@ -121,7 +114,7 @@ export default function SignUpPage() {
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel>Email Address</FieldLabel>
                       <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <Mail className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
                           {...field}
                           type="email"
@@ -144,7 +137,7 @@ export default function SignUpPage() {
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel>Password</FieldLabel>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <Lock className="absolute left-3 top-3 h-4 w-4 " />
                         <Input
                           {...field}
                           type="password"
@@ -173,12 +166,9 @@ export default function SignUpPage() {
             </Button>
 
             {/* Sign In Link */}
-            <p className="text-center text-sm text-slate-600">
+            <p className="text-center text-sm ">
               Already have an account?{" "}
-              <Link
-                href="/sign-in"
-                className="font-medium text-slate-900 hover:underline"
-              >
+              <Link href="/sign-in" className="font-medium  hover:underline">
                 Sign in
               </Link>
             </p>
@@ -186,13 +176,13 @@ export default function SignUpPage() {
         </Card>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-500">
+        <p className="text-center text-xs ">
           By signing up, you agree to our{" "}
-          <Link href="/terms" className="underline hover:text-slate-700">
+          <Link href="/terms" className="underline ">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="underline hover:text-slate-700">
+          <Link href="/privacy" className="underline ">
             Privacy Policy
           </Link>
         </p>

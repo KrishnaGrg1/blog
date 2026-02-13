@@ -48,9 +48,9 @@ export default async function Blog({
     : [];
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Header Navigation */}
-      <div className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+      <div className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link href="/blog">
             <Button variant="ghost" size="sm" className="gap-2">
@@ -95,7 +95,7 @@ export default async function Blog({
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent leading-tight">
             {blog.title}
           </h1>
 
@@ -121,31 +121,32 @@ export default async function Blog({
 
         {/* Featured Image */}
         {blog.photo && (
-          <div className="relative w-full  rounded-2xl overflow-hidden shadow-2xl mb-12 group">
+          <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-12 group">
             <img
               src={blog.photo}
               alt={blog.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 " />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         )}
 
         {/* Blog Content */}
         <div className="pb-20">
           <div
-            className="prose prose-lg prose-slate max-w-none
+            className="prose prose-lg max-w-none
+              dark:prose-invert
               prose-headings:font-bold prose-headings:tracking-tight
               prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
               prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-8
               prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-6
-              prose-p:text-slate-700 prose-p:leading-relaxed
-              prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-slate-900 prose-strong:font-semibold
-              prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-slate-900 prose-pre:shadow-lg
+              prose-p:leading-relaxed
+              prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+              prose-strong:font-semibold
+              prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-secondary prose-pre:shadow-lg
               prose-img:rounded-lg prose-img:shadow-md
-              prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:italic
+              prose-blockquote:border-l-4 prose-blockquote:border-blue-500 dark:prose-blockquote:border-blue-400 prose-blockquote:italic
               prose-ul:list-disc prose-ol:list-decimal
             "
             dangerouslySetInnerHTML={{ __html: blog.content }}

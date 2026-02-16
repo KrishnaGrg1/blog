@@ -9,19 +9,24 @@ export default async function Page({ params }: { params: { id: string } }) {
     headers: await headers(),
   });
   if (!session) notFound();
+  const { id } = await params;
 
   const blog = await prisma.blog.findFirst({
     where: {
-      id: params.id,
-      userId: session.user.id,
+      id: String(id),
+      userId: String(session.user.id),
     },
   });
 
   if (!blog) notFound();
 
-  return <EditBlogForm blog={{
-    ...blog,
-    photo: blog.photo ?? undefined,
-    seoKeywords: blog.seoKeywords ?? undefined,
-  }} />;
+  return (
+    <EditBlogForm
+      blog={{
+        ...blog,
+        photo: blog.photo ?? undefined,
+        seoKeywords: blog.seoKeywords ?? undefined,
+      }}
+    />
+  );
 }

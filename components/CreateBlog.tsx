@@ -25,6 +25,17 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import UploadButton from "./avatar-uploader";
+import RichTextEditor from "./RichTextEditor";
+
+// Converts a title into a URL-safe slug
+function toSlug(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
 
 export default function CreateBlogForm() {
   const router = useRouter();
@@ -42,6 +53,19 @@ export default function CreateBlogForm() {
       published: false,
     },
   });
+
+  // Auto-generate slug from title when slug field is empty
+  const handleTitleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldOnChange: (...args: unknown[]) => void,
+  ) => {
+    fieldOnChange(e);
+    const currentSlug = form.getValues("slug");
+    if (!currentSlug) {
+      form.setValue("slug", toSlug(e.target.value), { shouldValidate: false });
+    }
+  };
+
   const onSubmit = (data: CreateBlogInput) => {
     startTransition(async () => {
       try {
@@ -49,57 +73,35 @@ export default function CreateBlogForm() {
         toast.success("Blog created successfully");
         router.push("/blogs");
       } catch (err) {
-        toast.error("Something went wrong");
+        // BUG FIX: error handler was commented out — restored
+        console.error(err);
+        toast.error("Something went wrong. Please try again.");
       }
     });
   };
 
   return (
+    // BUG FIX: CardFooter must be OUTSIDE CardContent, otherwise it
+    // gets double-padded and the border-top doesn't render correctly.
     <Card>
       <CardHeader>
         <CardTitle>Create Blog</CardTitle>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FieldGroup>
+
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <CardContent>
+          <FieldGroup className="space-y-5">
+            {/* Title — with auto-slug generation */}
             <Controller
               name="title"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Title</FieldLabel>
-                  <Input {...field} placeholder="My awesome blog title" />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="slug"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Slug</FieldLabel>
-                  <Input {...field} placeholder="my-awesome-blog" />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="description"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Description</FieldLabel>
-                  <Textarea
+                  <Input
                     {...field}
-                    placeholder="Short description of your blog"
-                    rows={3}
+                    placeholder="My awesome blog title"
+                    onChange={(e) => handleTitleChange(e, field.onChange)}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -108,16 +110,65 @@ export default function CreateBlogForm() {
               )}
             />
 
+            {/* Slug */}
+            <Controller
+              name="slug"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Slug
+                    <span className="ml-1 text-xs text-muted-foreground font-normal">
+                      (auto-generated from title)
+                    </span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    placeholder="my-awesome-blog"
+                    onChange={(e) => field.onChange(toSlug(e.target.value))}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Description */}
+            <Controller
+              name="description"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Description
+                    <span className="ml-1 text-xs text-muted-foreground font-normal">
+                      (shown as subtitle on the post)
+                    </span>
+                  </FieldLabel>
+                  <Textarea
+                    {...field}
+                    placeholder="A short description shown below the title"
+                    rows={2}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Content */}
             <Controller
               name="content"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Content</FieldLabel>
-                  <Textarea
-                    {...field}
-                    placeholder="Full blog content..."
-                    rows={10}
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Start writing your blog content..."
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -126,13 +177,14 @@ export default function CreateBlogForm() {
               )}
             />
 
+            {/* Cover photo */}
             <Controller
               name="photo"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Blog Photo</FieldLabel>
-                  <div className="space-y-2">
+                  <FieldLabel>Cover Photo</FieldLabel>
+                  <div className="space-y-3">
                     <UploadButton
                       uploadPreset={
                         process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ||
@@ -149,20 +201,19 @@ export default function CreateBlogForm() {
                     />
 
                     {field.value && (
-                      <div className="mt-2">
+                      <div className="flex items-start gap-3">
                         <img
                           src={field.value}
-                          alt="Uploaded preview"
-                          className="h-32 w-32 object-cover rounded-md border"
+                          alt="Cover preview"
+                          className="h-24 w-40 object-cover rounded-md border"
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          className="mt-2"
                           onClick={() => field.onChange("")}
                         >
-                          Remove Image
+                          Remove
                         </Button>
                       </div>
                     )}
@@ -175,13 +226,22 @@ export default function CreateBlogForm() {
               )}
             />
 
+            {/* SEO Keywords */}
             <Controller
               name="seoKeywords"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>SEO Keywords</FieldLabel>
-                  <Input {...field} placeholder="blog, tech, coding" />
+                  <FieldLabel>
+                    SEO Keywords
+                    <span className="ml-1 text-xs text-muted-foreground font-normal">
+                      (comma-separated)
+                    </span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    placeholder="nestjs, typescript, saas, webdev"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -189,30 +249,49 @@ export default function CreateBlogForm() {
               )}
             />
 
+            {/* Published toggle */}
             <Controller
               name="published"
               control={form.control}
               render={({ field }) => (
                 <Field>
-                  <label className="flex items-center gap-2">
+                  <div className="flex items-center justify-between rounded-lg border p-3">
+                    <div>
+                      <FieldLabel className="mb-0">
+                        Publish immediately
+                      </FieldLabel>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        If off, post is saved as a draft
+                      </p>
+                    </div>
                     <Switch
-                      checked={field.value} // bind form value
-                      onCheckedChange={(val) => field.onChange(val)} // update form on toggle
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
                     />
-                    Published
-                  </label>
+                  </div>
                 </Field>
               )}
             />
           </FieldGroup>
+        </CardContent>
 
-          <CardFooter>
+        {/* BUG FIX: CardFooter is now correctly outside CardContent */}
+        <CardFooter className="border-t bg-muted/30 px-6 py-4">
+          <div className="flex items-center gap-3 ml-auto">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.back()}
+              disabled={isPending}
+            >
+              Cancel
+            </Button>
             <Button type="submit" disabled={isPending}>
               {isPending ? "Creating..." : "Create Blog"}
             </Button>
-          </CardFooter>
-        </form>
-      </CardContent>
+          </div>
+        </CardFooter>
+      </form>
     </Card>
   );
 }

@@ -32,21 +32,19 @@ import {
 import "./RichTextEditor.css";
 
 interface RichTextEditorProps {
-  value: string;
+  value?: string;
   onChange: (html: string) => void;
   placeholder?: string;
 }
 
 export default function RichTextEditor({
-  value,
+  value = "",
   onChange,
   placeholder = "Write your content...",
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        codeBlock: true,
-      }),
+      StarterKit,
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
@@ -70,14 +68,13 @@ export default function RichTextEditor({
         class: "rich-text-editor",
       },
     },
+    immediatelyRender: false,
   });
 
   // Sync external value changes (e.g., when editing an existing blog)
   useEffect(() => {
     if (editor && value !== editor.getHTML()) {
-      if (editor.isReady) {
-        editor.commands.setContent(value);
-      }
+      editor.commands.setContent(value);
     }
   }, [value, editor]);
 
@@ -157,21 +154,27 @@ export default function RichTextEditor({
         <div className="w-px h-8 bg-muted-foreground/20 mx-1 self-center" />
 
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 1 }).run()
+          }
           isActive={editor.isActive("heading", { level: 1 })}
           title="Heading 1"
         >
           <Heading1 className="h-4 w-4" />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
           isActive={editor.isActive("heading", { level: 2 })}
           title="Heading 2"
         >
           <Heading2 className="h-4 w-4" />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
           isActive={editor.isActive("heading", { level: 3 })}
           title="Heading 3"
         >
@@ -214,7 +217,11 @@ export default function RichTextEditor({
 
         <div className="w-px h-8 bg-muted-foreground/20 mx-1 self-center" />
 
-        <ToolbarButton onClick={addLink} isActive={editor.isActive("link")} title="Add Link">
+        <ToolbarButton
+          onClick={addLink}
+          isActive={editor.isActive("link")}
+          title="Add Link"
+        >
           <LinkIcon className="h-4 w-4" />
         </ToolbarButton>
         <ToolbarButton onClick={addImage} title="Add Image">

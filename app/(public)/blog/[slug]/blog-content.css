@@ -1,0 +1,75 @@
+/*
+  blog-content.css  —  app/blog-content.css
+  Scoped to [data-blog-body] so the author avatar and cover image
+  are NEVER affected. Only images inside the Tiptap HTML body are touched.
+*/
+
+/* ── IMAGES inside blog body only ──────────────────────────────── */
+[data-blog-body] img {
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 500px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Center the <p> Tiptap wraps around images */
+[data-blog-body] p:has(> img) {
+  display: flex !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ── CODE BLOCKS ────────────────────────────────────────────────── */
+[data-blog-body] pre {
+  background-color: #18181b !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 0.75rem !important;
+  padding: 1.25rem 1.5rem !important;
+  overflow-x: auto !important;
+  font-size: 0.875rem !important;
+  line-height: 1.75 !important;
+  margin: 1.5rem 0 !important;
+}
+
+[data-blog-body] pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: inherit !important;
+  color: #e4e4e7 !important;
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  font-weight: 400 !important;
+  box-shadow: none !important;
+}
+
+/* ── INLINE CODE ────────────────────────────────────────────────── */
+[data-blog-body] :not(pre) > code {
+  background-color: hsl(var(--secondary)) !important;
+  color: hsl(var(--foreground)) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em !important;
+  padding: 0.15em 0.45em !important;
+  border-radius: 0.3rem !important;
+  font-weight: 500 !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+/* ── DARK MODE ──────────────────────────────────────────────────── */
+.dark [data-blog-body] pre {
+  background-color: #09090b !important;
+  border-color: #27272a !important;
+}
+.dark [data-blog-body] pre code {
+  color: #d4d4d8 !important;
+}

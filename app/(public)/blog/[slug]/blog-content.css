@@ -1,10 +1,9 @@
 /*
   blog-content.css  —  app/blog-content.css
-  Scoped to [data-blog-body] so the author avatar and cover image
-  are NEVER affected. Only images inside the Tiptap HTML body are touched.
+  Scoped to [data-blog-body].
 */
 
-/* ── IMAGES inside blog body only ──────────────────────────────── */
+/* ── IMAGES ─────────────────────────────────────────────────────── */
 [data-blog-body] img {
   display: block !important;
   width: auto !important;
@@ -18,7 +17,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Center the <p> Tiptap wraps around images */
 [data-blog-body] p:has(> img) {
   display: flex !important;
   justify-content: center !important;
@@ -27,16 +25,37 @@
   margin-bottom: 1.5rem !important;
 }
 
-/* ── CODE BLOCKS ────────────────────────────────────────────────── */
+/* ── CODE BLOCKS ─────────────────────────────────────────────────
+   Mobile fix:
+   1. The [data-blog-body] wrapper itself needs min-width:0 so it
+      can shrink inside a flex/grid parent without overflowing.
+   2. pre gets max-width:100% + overflow-x:auto to scroll horizontally
+      instead of pushing past the screen edge.
+   3. pre code keeps white-space:pre (so indentation is preserved)
+      but the scroll happens on the pre wrapper, not the page.
+──────────────────────────────────────────────────────────────── */
+
+/* Prevent the prose wrapper from overflowing its column */
+[data-blog-body] {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden; /* page itself never scrolls horizontally */
+}
+
 [data-blog-body] pre {
   background-color: #18181b !important;
   border: 1px solid #3f3f46 !important;
   border-radius: 0.75rem !important;
-  padding: 1.25rem 1.5rem !important;
+  padding: 1rem 1.25rem !important;
+  /* KEY: constrain to container, scroll internally */
+  max-width: 100% !important;
   overflow-x: auto !important;
-  font-size: 0.875rem !important;
-  line-height: 1.75 !important;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+  font-size: 0.8rem !important;      /* slightly smaller on all screens */
+  line-height: 1.7 !important;
   margin: 1.5rem 0 !important;
+  /* Prevent the pre itself from expanding the page */
+  box-sizing: border-box !important;
 }
 
 [data-blog-body] pre code {
@@ -46,14 +65,28 @@
   border-radius: 0 !important;
   font-size: inherit !important;
   color: #e4e4e7 !important;
+  /* white-space:pre preserves indentation — scrolling happens on pre */
   white-space: pre !important;
   word-break: normal !important;
   overflow-wrap: normal !important;
   font-weight: 400 !important;
   box-shadow: none !important;
+  /* Let the code expand naturally — pre clips + scrolls it */
+  display: block;
+  width: max-content;
+  min-width: 100%;
 }
 
-/* ── INLINE CODE ────────────────────────────────────────────────── */
+/* Slightly smaller font on mobile so more code fits per line */
+@media (max-width: 640px) {
+  [data-blog-body] pre {
+    font-size: 0.75rem !important;
+    padding: 0.875rem 1rem !important;
+    border-radius: 0.5rem !important;
+  }
+}
+
+/* ── INLINE CODE ─────────────────────────────────────────────────── */
 [data-blog-body] :not(pre) > code {
   background-color: hsl(var(--secondary)) !important;
   color: hsl(var(--foreground)) !important;
@@ -63,9 +96,12 @@
   border-radius: 0.3rem !important;
   font-weight: 500 !important;
   border: 1px solid hsl(var(--border)) !important;
+  /* Allow inline code to wrap on mobile so it doesn't overflow */
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 
-/* ── DARK MODE ──────────────────────────────────────────────────── */
+/* ── DARK MODE ───────────────────────────────────────────────────── */
 .dark [data-blog-body] pre {
   background-color: #09090b !important;
   border-color: #27272a !important;
